@@ -10,12 +10,10 @@ import java.util.List;
 
 public interface PostService {
 
-
     PostResponse createPost(PostAddRequest request);
     PostResponse getSinglePost(Long postId);
     List<PostResponse> getAllPost();
     PostUpdateResponse updatePost(Long postId, PostUpdateRequest postUpdateRequest);
     void deletePost(Long postId);
-
 
 }
