@@ -16,4 +16,8 @@ public interface PostService {
     PostUpdateResponse updatePost(Long postId, PostUpdateRequest postUpdateRequest);
     void deletePost(Long postId);
 
+
+    // pagination
+    List<PostResponse> getFirstPageSortedByPostTitle();
+
 }

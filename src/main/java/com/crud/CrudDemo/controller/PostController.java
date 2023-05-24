@@ -65,4 +65,13 @@ public class PostController {
     }
 
 
+    // pagination using JPA
+
+    // http://localhost:8080/api/posts/page/<page_number>/<sort_by_attribute>
+    @GetMapping("/page/1/sortByPostTitle")
+    public List<PostResponse> getFirstPageSortedByPostTitle(){
+        return postService.getFirstPageSortedByPostTitle();
+    }
+
+
 }

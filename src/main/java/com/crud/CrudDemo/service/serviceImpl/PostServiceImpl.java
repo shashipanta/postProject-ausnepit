@@ -10,6 +10,10 @@ import com.crud.CrudDemo.repository.PostRepo;
 import com.crud.CrudDemo.service.PostService;
 import com.crud.CrudDemo.utils.DateTimeToString;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,6 +71,18 @@ public class PostServiceImpl implements PostService {
 
         Post post = postRepo.findById(postId).orElseThrow(PostNotFoundException::new);
         postRepo.delete(post);
+    }
+
+    @Override
+    public List<PostResponse> getFirstPageSortedByPostTitle() {
+
+        Pageable findFirstPageSortedByPostTitle = PageRequest.of(1, 5, Sort.by("title"));
+
+        Page<Post> posts = postRepo.findAll(findFirstPageSortedByPostTitle);
+
+        return posts.stream()
+                .map(PostResponse::preparePostResponse)
+                .collect(Collectors.toList());
     }
 
 
