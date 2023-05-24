@@ -9,4 +9,6 @@ public interface PageablePostService {
     List<PostResponse> getAllPosts();
 
     List<PostResponse> getThirdPageWithTwoPosts();
+
+    List<PostResponse> getPostByPostTitle(String postTitle);
 }

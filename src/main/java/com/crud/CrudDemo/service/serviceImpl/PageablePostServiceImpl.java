@@ -47,4 +47,15 @@ public class PageablePostServiceImpl implements PageablePostService {
                     .map(post -> PostResponse.preparePostResponse(post))
                     .collect(Collectors.toList());
     }
+
+    @Override
+    public List<PostResponse> getPostByPostTitle(String postTitle) {
+
+        List<Post> foundPosts = pageableAndSortablePostRepo.findPostByTitle(postTitle, firstPageWithFivePosts);
+
+        return foundPosts.stream()
+                    .map(PostResponse::preparePostResponse)
+                    .collect(Collectors.toList());
+
+    }
 }
