@@ -67,7 +67,7 @@ public class PageablePostServiceImpl implements PageablePostService {
         // page starts from 0 so make
         pageNumber = pageNumber -1;
 
-        if(pageNumber < 0) throw new PageNotValidException();
+        if(pageNumber < 0) throw new PageNotValidException(pageNumber+1);
 
         Pageable findPostByOffset = PageRequest.of(pageNumber, 2);
 
@@ -75,7 +75,7 @@ public class PageablePostServiceImpl implements PageablePostService {
 
         int totalPagesAvailable = posts.getTotalPages();
 
-        if (totalPagesAvailable < pageNumber) throw new PageNotValidException();
+        if (totalPagesAvailable < pageNumber) throw new PageNotValidException(pageNumber+1);
 
         return posts.getContent()
                 .stream()

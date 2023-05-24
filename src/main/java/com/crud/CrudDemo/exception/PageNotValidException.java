@@ -5,4 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Page Number is not valid")
 public class PageNotValidException extends RuntimeException{
+
+    public PageNotValidException(Integer pageNumber){
+        super(String.valueOf(pageNumber));
+    }
 }
