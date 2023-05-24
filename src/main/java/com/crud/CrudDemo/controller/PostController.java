@@ -53,9 +53,9 @@ public class PostController {
 
     @PutMapping("/{id}")
     public PostUpdateResponse updatePost(@PathVariable("id") Long postId,
-                                         @RequestBody PostUpdateRequest postUpdateRequest){
-        PostUpdateResponse updatedPostResponse = postService.updatePost(postId, postUpdateRequest);
-        return updatedPostResponse;
+                                        @RequestBody PostUpdateRequest postUpdateRequest){
+
+        return postService.updatePost(postId, postUpdateRequest);
     }
 
     @DeleteMapping("/{id}")
