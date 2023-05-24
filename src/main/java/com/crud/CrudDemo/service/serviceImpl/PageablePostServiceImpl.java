@@ -2,6 +2,8 @@ package com.crud.CrudDemo.service.serviceImpl;
 
 import com.crud.CrudDemo.dto.response.PostResponse;
 import com.crud.CrudDemo.entity.Post;
+import com.crud.CrudDemo.exception.PageNotValidException;
+import com.crud.CrudDemo.exception.PostNotFoundException;
 import com.crud.CrudDemo.repository.PageableAndSortablePostRepo;
 import com.crud.CrudDemo.service.PageablePostService;
 import lombok.RequiredArgsConstructor;
@@ -57,5 +59,27 @@ public class PageablePostServiceImpl implements PageablePostService {
                     .map(PostResponse::preparePostResponse)
                     .collect(Collectors.toList());
 
+    }
+
+    // By default this gives us 2 entries given in page number
+    @Override
+    public List<PostResponse> getPostsByOffset(Integer pageNumber) {
+        // page starts from 0 so make
+        pageNumber = pageNumber -1;
+
+        if(pageNumber < 0) throw new PageNotValidException();
+
+        Pageable findPostByOffset = PageRequest.of(pageNumber, 2);
+
+        Page<Post> posts = pageableAndSortablePostRepo.findAll(findPostByOffset);
+
+        int totalPagesAvailable = posts.getTotalPages();
+
+        if (totalPagesAvailable < pageNumber) throw new PageNotValidException();
+
+        return posts.getContent()
+                .stream()
+                .map(PostResponse::preparePostResponse)
+                .collect(Collectors.toList());
     }
 }

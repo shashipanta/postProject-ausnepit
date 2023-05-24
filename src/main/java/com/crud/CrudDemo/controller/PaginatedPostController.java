@@ -1,7 +1,6 @@
 package com.crud.CrudDemo.controller;
 
 import com.crud.CrudDemo.dto.response.PostResponse;
-import com.crud.CrudDemo.entity.Post;
 import com.crud.CrudDemo.service.PageablePostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/paginated")
+@RequestMapping(value = "/api/post/page")
 public class PaginatedPostController {
 
     private final PageablePostService pageablePostService;
@@ -21,6 +20,12 @@ public class PaginatedPostController {
     @GetMapping(value = "/")
     public List<PostResponse> getPaginatedPosts(){
         return pageablePostService.getAllPosts();
+    }
+
+    @GetMapping(value = "/{page-number}")
+    public List<PostResponse> getPaginatedPostByPageNumber(@PathVariable("page-number") Integer pageNumber){
+
+        return pageablePostService.getPostsByOffset(pageNumber);
     }
 
     @GetMapping(value = "/third-page")

@@ -25,5 +25,12 @@ public class ExceptionHandlers {
         return new ErrorResponse("INTERNAL_SERVER_ERROR", "Something went wrong in server");
     }
 
+    @ExceptionHandler(PageNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponse handlePageNotValidException(final PageNotValidException pageNotValidException){
+        return new ErrorResponse("PAGE_NOT_VALID", "Page Number is not valid");
+    }
+
 
 }
