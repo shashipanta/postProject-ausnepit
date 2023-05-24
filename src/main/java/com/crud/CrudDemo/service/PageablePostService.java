@@ -13,5 +13,7 @@ public interface PageablePostService {
 
     List<PostResponse> getPostByPostTitle(String postTitle);
 
-    List<PostResponse> getPostsByOffset(Integer pageNumber);
+    List<PostResponse> getPostByPageNumber(Integer pageNumber);
+
+    List<PostResponse> getPostByPageNumberAndPageOffset(Integer pageNumber, Integer pageOffset);
 }

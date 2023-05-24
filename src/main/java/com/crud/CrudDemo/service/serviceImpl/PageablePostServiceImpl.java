@@ -63,15 +63,15 @@ public class PageablePostServiceImpl implements PageablePostService {
 
     // By default this gives us 2 entries given in page number
     @Override
-    public List<PostResponse> getPostsByOffset(Integer pageNumber) {
+    public List<PostResponse> getPostByPageNumber(Integer pageNumber) {
         // page starts from 0 so make
         pageNumber = pageNumber -1;
 
         if(pageNumber < 0) throw new PageNotValidException(pageNumber+1);
 
-        Pageable findPostByOffset = PageRequest.of(pageNumber, 2);
+        Pageable findPostByPageNumber = PageRequest.of(pageNumber, 2);
 
-        Page<Post> posts = pageableAndSortablePostRepo.findAll(findPostByOffset);
+        Page<Post> posts = pageableAndSortablePostRepo.findAll(findPostByPageNumber);
 
         int totalPagesAvailable = posts.getTotalPages();
 
@@ -81,5 +81,25 @@ public class PageablePostServiceImpl implements PageablePostService {
                 .stream()
                 .map(PostResponse::preparePostResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostResponse> getPostByPageNumberAndPageOffset(Integer pageNumber, Integer pageOffset) {
+
+        // check if pageNumber is invalid
+        pageNumber = pageNumber - 1;
+        if(pageNumber < 0) throw new PageNotValidException(pageNumber + 1);
+
+        Pageable findPostByPageNumberAndPageOffset = PageRequest.of(pageNumber, pageOffset);
+
+        Page<Post> postPage = pageableAndSortablePostRepo.findAll(findPostByPageNumberAndPageOffset);
+
+        // check if pageNumber exceeds max page available
+        if(postPage.getTotalPages() < pageNumber) throw new PageNotValidException(pageNumber + 1);
+
+
+        return postPage.stream()
+                        .map(PostResponse::preparePostResponse)
+                        .collect(Collectors.toList());
     }
 }

@@ -28,8 +28,8 @@ public class ExceptionHandlers {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorResponse handleInternalServerError(final Throwable ex){
-
         logger.error("Internal Server Error");
+        ex.printStackTrace();
         return new ErrorResponse("INTERNAL_SERVER_ERROR", "Something went wrong in server");
     }
 
