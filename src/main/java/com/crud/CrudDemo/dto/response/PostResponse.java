@@ -21,6 +21,7 @@ public class PostResponse {
     private String description;
     private List<String> categories;
     private String createdAt;
+    private String updatedAt;
 
     public static PostResponse preparePostResponse(Post post){
         return PostResponse.builder()
@@ -28,6 +29,7 @@ public class PostResponse {
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .createdAt(DateTimeToString.localDateTimeToString(post.getCreatedAt()))
+                .updatedAt(DateTimeToString.localDateTimeToString(post.getUpdatedAt()))
                 .build();
     }
 

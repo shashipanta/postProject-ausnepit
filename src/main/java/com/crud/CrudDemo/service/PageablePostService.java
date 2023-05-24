@@ -1,7 +1,6 @@
 package com.crud.CrudDemo.service;
 
 import com.crud.CrudDemo.dto.response.PostResponse;
-import com.crud.CrudDemo.entity.Post;
 
 import java.util.List;
 

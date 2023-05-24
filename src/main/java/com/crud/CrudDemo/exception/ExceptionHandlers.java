@@ -42,4 +42,14 @@ public class ExceptionHandlers {
     }
 
 
+    // Attribute not found during sorting operation
+    @ExceptionHandler(AttributeNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleAttributeNotFoundException(final AttributeNotFoundException attributeNotFoundException){
+        logger.error("Post does not have attribute named : {}", attributeNotFoundException.getMessage());
+        return new ErrorResponse("ATTRIBUTE_NOT_FOUND", "Attribute is invalid");
+    }
+
+
 }

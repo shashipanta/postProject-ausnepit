@@ -1,8 +1,8 @@
 package com.crud.CrudDemo.controller;
 
 import com.crud.CrudDemo.dto.response.PostResponse;
-import com.crud.CrudDemo.entity.Post;
 import com.crud.CrudDemo.service.PageablePostService;
+import com.crud.CrudDemo.service.SortablePostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +14,7 @@ import java.util.List;
 public class PaginatedPostController {
 
     private final PageablePostService pageablePostService;
+    private final SortablePostService sortablePostService;
 
     @GetMapping(value = "/")
     public List<PostResponse> getPaginatedPosts(){
@@ -44,5 +45,24 @@ public class PaginatedPostController {
     @GetMapping(value = "/find-by-title/{title}")
     public List<PostResponse> getPaginatedPostByTitle(@PathVariable("title") String postTitle){
         return pageablePostService.getPostByPostTitle(postTitle);
+    }
+
+    // sorted response
+
+    @GetMapping(value = "/sort")
+    public List<PostResponse> getSortedPost(){
+        return sortablePostService.getSortedPost();
+    }
+
+    @GetMapping(value = "/sort-by-title")
+    public List<PostResponse> getPostSortedByTitle(){
+        return sortablePostService.getPostSortedByTitle();
+    }
+
+    // http://localhost:8080/api/posts/page/sort-by-attribute?created at
+    @GetMapping(value = "/sort-by-attribute")
+    public List<PostResponse> getPostSortedByAttributeName(@RequestParam(value = "sort-param") String sortParam){
+
+        return sortablePostService.getPostSortedByAttribute(sortParam);
     }
 }
