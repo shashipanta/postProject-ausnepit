@@ -1,5 +1,6 @@
 package com.crud.CrudDemo.service;
 
+import com.crud.CrudDemo.dto.CustomMessage;
 import com.crud.CrudDemo.dto.request.CategoryRequest;
 import com.crud.CrudDemo.dto.response.CategoryResponse;
 
@@ -10,11 +11,11 @@ public interface CategoryService {
 
     CategoryResponse createCategory(CategoryRequest categoryRequest);
 
-    List<CategoryRequest> getAllCategories();
+    List<CategoryResponse> getAllCategories();
 
     CategoryResponse getSingleCategory(Long categoryId);
 
-    void deleteCategory(Long categoryId);
+    CustomMessage deleteCategoryById(Long categoryId);
 
-    CategoryResponse updateCategory(Long categoryId);
+    CategoryResponse updateCategory(Long categoryId, CategoryRequest categoryRequest);
 }

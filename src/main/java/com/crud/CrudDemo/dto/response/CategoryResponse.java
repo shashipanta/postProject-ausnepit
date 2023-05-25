@@ -1,7 +1,6 @@
 package com.crud.CrudDemo.dto.response;
 
 import com.crud.CrudDemo.entity.Category;
-import com.crud.CrudDemo.entity.Post;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +10,6 @@ public class CategoryResponse {
 
     private Long id;
     private String name;
-    private Post post;
     private String description;
 
     public static CategoryResponse prepareCategoryResponse(Category category){

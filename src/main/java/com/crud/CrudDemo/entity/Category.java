@@ -1,17 +1,21 @@
 package com.crud.CrudDemo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 
 @Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE category  SET is_deleted = true WHERE id=?")
+@Where(clause = "is_deleted=false")
 public class Category {
 
     @Id
@@ -23,6 +27,8 @@ public class Category {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    private Boolean isDeleted = false;
 
 //    @OneToMany(fetch = FetchType.EAGER, targetEntity = Post.class)
 //    @JoinColumn(foreignKey = @ForeignKey(name = "fk_category_postid"))

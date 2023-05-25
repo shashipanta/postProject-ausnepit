@@ -1,5 +1,6 @@
 package com.crud.CrudDemo.service.serviceImpl;
 
+import com.crud.CrudDemo.dto.CustomMessage;
 import com.crud.CrudDemo.dto.request.CategoryRequest;
 import com.crud.CrudDemo.dto.response.CategoryResponse;
 import com.crud.CrudDemo.entity.Category;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +28,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryRequest> getAllCategories() {
-        return null;
+    public List<CategoryResponse> getAllCategories() {
+
+        List<Category> categoryList = categoryRepo.findAll();
+        List<CategoryResponse> categoryResponseList =
+                categoryList.stream()
+                    .map(CategoryResponse::prepareCategoryResponse)
+                    .collect(Collectors.toList());
+        return categoryResponseList;
     }
 
     @Override
@@ -35,12 +44,52 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(Long categoryId) {
+    public CustomMessage deleteCategoryById(Long categoryId) {
+        categoryRepo.deleteById(categoryId);
+
+        Optional<Category> category = categoryRepo.findById(categoryId);
+
+        if(!category.isPresent()){
+            return new CustomMessage("Category deleted successfully");
+        }
+
+        return new CustomMessage("Category Id is invalid / not found");
 
     }
 
     @Override
-    public CategoryResponse updateCategory(Long categoryId) {
-        return null;
+    public CategoryResponse updateCategory(Long categoryId, CategoryRequest categoryRequest) {
+
+        Optional<Category> optionalCategory = categoryRepo.findById(categoryId);
+
+        Category foundCategory = null;
+
+        if(optionalCategory.isPresent()){
+            foundCategory = optionalCategory.get();
+        }
+
+        foundCategory = prepareCategoryToUpdate(categoryRequest, foundCategory);
+
+        foundCategory =  categoryRepo.save(foundCategory);
+
+        return CategoryResponse.prepareCategoryResponse(foundCategory);
+    }
+
+
+    private Category prepareCategoryToSave(CategoryRequest categoryRequest){
+        Category category = new Category();
+
+        category.setName(categoryRequest.getName());
+        category.setDescription(categoryRequest.getDescription());
+
+        return category;
+    }
+
+    private Category prepareCategoryToUpdate(CategoryRequest categoryRequest, Category foundCategory){
+
+        if(categoryRequest.getName() != null) foundCategory.setName(categoryRequest.getName());
+        if(categoryRequest.getDescription() != null) foundCategory.setDescription(categoryRequest.getDescription());
+
+        return foundCategory;
     }
 }
