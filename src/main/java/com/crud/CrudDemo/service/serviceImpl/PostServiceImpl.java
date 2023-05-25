@@ -42,7 +42,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponse getSinglePost(Long id) {
 
-        Post foundPost = postRepo.findById(id).orElseThrow(PostNotFoundException::new);
+        // this is default behaviour
+//        Post foundPost = postRepo.findById(id).orElseThrow(PostNotFoundException::new);
+
+        // for soft delete
+        Post foundPost = postRepo.findPostByIdAndAndIsDeleted(id, false);
+
+        if(foundPost == null) throw new PostNotFoundException();
 
         return PostResponse.preparePostResponse(foundPost);
     }
@@ -60,6 +66,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostUpdateResponse updatePost(Long postId, PostUpdateRequest postUpdateRequest) {
         Post postToUpdate = postRepo.findById(postId).orElseThrow(PostNotFoundException::new);
+
+        // for soft delete
+        Post foundPost = postRepo.findPostByIdAndAndIsDeleted(postId, false);
+
+        if(foundPost == null) throw new PostNotFoundException();
 
         postToUpdate = postRepo.save(preparePostUpdate(postUpdateRequest, postToUpdate));
 

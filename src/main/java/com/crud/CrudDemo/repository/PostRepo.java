@@ -10,4 +10,8 @@ public interface PostRepo extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.isDeleted = false")
     List<Post> findAllPost();
+
+    Post findPostByIdAndAndIsDeleted(Long id, Boolean isDeleted);
+
+//    Post findPostByIdAndIsDeletedNotIn(Long id);
 }
