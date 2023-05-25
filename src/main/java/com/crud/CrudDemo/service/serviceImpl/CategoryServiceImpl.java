@@ -4,6 +4,7 @@ import com.crud.CrudDemo.dto.CustomMessage;
 import com.crud.CrudDemo.dto.request.CategoryRequest;
 import com.crud.CrudDemo.dto.response.CategoryResponse;
 import com.crud.CrudDemo.entity.Category;
+import com.crud.CrudDemo.exception.CategoryNotFoundException;
 import com.crud.CrudDemo.repository.CategoryRepo;
 import com.crud.CrudDemo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -60,15 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse updateCategory(Long categoryId, CategoryRequest categoryRequest) {
 
-        Optional<Category> optionalCategory = categoryRepo.findById(categoryId);
-
-        Category foundCategory = null;
-
-        if(optionalCategory.isPresent()){
-            foundCategory = optionalCategory.get();
-        } else {
-            throw new RuntimeException("Category is not found");
-        }
+        Category foundCategory = categoryRepo.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
         foundCategory = prepareCategoryToUpdate(categoryRequest, foundCategory);
 

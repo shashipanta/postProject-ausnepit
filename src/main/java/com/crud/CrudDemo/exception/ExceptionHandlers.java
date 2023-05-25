@@ -51,5 +51,13 @@ public class ExceptionHandlers {
         return new ErrorResponse("ATTRIBUTE_NOT_FOUND", "Attribute is invalid");
     }
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleCategoryNotFoundException(final CategoryNotFoundException categoryNotFoundException) {
+        logger.error("Category not found : {}", categoryNotFoundException.getMessage());
+        return new ErrorResponse("CATEGORY_NOT_FOUND", "Category not found");
+    }
+
 
 }
