@@ -24,14 +24,14 @@ public class ExceptionHandlers {
         return new ErrorResponse("POST_NOT_FOUND", "Post was not found");
     }
 
-    @ExceptionHandler(Throwable.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public ErrorResponse handleInternalServerError(final Throwable ex){
-        logger.error("Internal Server Error");
-        ex.printStackTrace();
-        return new ErrorResponse("INTERNAL_SERVER_ERROR", "Something went wrong in server");
-    }
+//    @ExceptionHandler(Throwable.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ResponseBody
+//    public ErrorResponse handleInternalServerError(final Throwable ex){
+//        logger.error("Internal Server Error");
+//        ex.printStackTrace();
+//        return new ErrorResponse("INTERNAL_SERVER_ERROR", "Something went wrong in server");
+//    }
 
     @ExceptionHandler(PageNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

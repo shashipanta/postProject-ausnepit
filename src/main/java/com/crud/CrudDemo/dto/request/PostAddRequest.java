@@ -1,5 +1,6 @@
 package com.crud.CrudDemo.dto.request;
 
+import com.crud.CrudDemo.entity.Category;
 import com.crud.CrudDemo.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,14 +17,14 @@ public class PostAddRequest {
 
     private String title;
     private String description;
-    private List<String> categories;
 
     public static Post postBuildFromRequest(PostAddRequest postAddRequest){
-        return Post.builder()
-                .id(null)
+        Post post =  Post.builder()
                 .title(postAddRequest.getTitle())
                 .description(postAddRequest.getDescription())
+                .isDeleted(false)
                 .build();
+        return post;
     }
 
 }

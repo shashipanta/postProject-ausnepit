@@ -3,7 +3,8 @@ package com.crud.CrudDemo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
+
 
 @Entity
 @Getter
@@ -20,6 +21,10 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
-    List<Post> postList;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+//    @OneToMany(fetch = FetchType.EAGER, targetEntity = Post.class)
+//    @JoinColumn(foreignKey = @ForeignKey(name = "fk_category_postid"))
+//    private Set<Post> post;
 }

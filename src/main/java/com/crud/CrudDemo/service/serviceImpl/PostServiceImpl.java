@@ -49,7 +49,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostResponse> getAllPost() {
-        return postRepo.findAll()
+        return postRepo.findAllPost()
                 .stream()
                 .map(post ->
                     PostResponse.preparePostResponse(post)
@@ -70,7 +70,10 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long postId) {
 
         Post post = postRepo.findById(postId).orElseThrow(PostNotFoundException::new);
-        postRepo.delete(post);
+//        postRepo.delete(post);
+        post.setIsDeleted(true);
+        postRepo.save(post);
+
     }
 
     @Override

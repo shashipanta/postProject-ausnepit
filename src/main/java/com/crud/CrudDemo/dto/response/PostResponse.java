@@ -1,5 +1,6 @@
 package com.crud.CrudDemo.dto.response;
 
+import com.crud.CrudDemo.entity.Category;
 import com.crud.CrudDemo.entity.Post;
 import com.crud.CrudDemo.utils.DateTimeToString;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,6 @@ public class PostResponse {
     private Long id;
     private String title;
     private String description;
-    private List<String> categories;
     private String createdAt;
     private String updatedAt;
 

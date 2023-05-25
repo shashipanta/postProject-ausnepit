@@ -33,7 +33,9 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Category.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_post_categoryid"))
-    private Category category;
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Category.class, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_post_categoryid"))
+//    private Category category;
+
+    private Boolean isDeleted = false;
 }
