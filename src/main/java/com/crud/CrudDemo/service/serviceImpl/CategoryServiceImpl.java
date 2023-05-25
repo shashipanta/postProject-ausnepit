@@ -7,7 +7,11 @@ import com.crud.CrudDemo.entity.Category;
 import com.crud.CrudDemo.exception.CategoryNotFoundException;
 import com.crud.CrudDemo.repository.CategoryRepo;
 import com.crud.CrudDemo.service.CategoryService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Filter;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepo categoryRepo;
+
     @Override
     public CategoryResponse createCategory(CategoryRequest categoryRequest) {
         Category category = CategoryRequest.prepareCategory(categoryRequest);
@@ -69,6 +74,17 @@ public class CategoryServiceImpl implements CategoryService {
 
         return CategoryResponse.prepareCategoryResponse(foundCategory);
     }
+
+
+    // get deleted categories : for admin
+//    public Iterable<Category> findAll(boolean isDeleted){
+//        Session session = entityManager.unwrap(Session.class);
+//        Filter filter = session.enableFilter("deletedProductFilter");
+//        filter.setParameter("isDeleted", isDeleted);
+//        Iterable<Category> products =  categoryRepo.findAll();
+//        session.disableFilter("deletedProductFilter");
+//        return products;
+//    }
 
 
     private Category prepareCategoryToSave(CategoryRequest categoryRequest){

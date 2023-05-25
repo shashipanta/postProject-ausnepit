@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
+import org.hibernate.annotations.*;
 
 @Entity
 @Getter
@@ -16,6 +14,11 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE category  SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted=false")
+@FilterDef(name = "deletedPostFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
+@Filter(name = "deletedPostFilter", condition = "is_deleted = :isDeleted")
+
+//@FilterDef(name = "deletedProductFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
+//@Filter(name = "deletedProductFilter", condition = "deleted = :isDeleted")
 public class Category {
 
     @Id
