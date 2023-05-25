@@ -66,6 +66,8 @@ public class CategoryServiceImpl implements CategoryService {
 
         if(optionalCategory.isPresent()){
             foundCategory = optionalCategory.get();
+        } else {
+            throw new RuntimeException("Category is not found");
         }
 
         foundCategory = prepareCategoryToUpdate(categoryRequest, foundCategory);
